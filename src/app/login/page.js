@@ -5,16 +5,18 @@ import {useState} from "react";
 import "../../app/auth.css";
 import Link from "next/link";
 import { Mail, Lock, LogIn } from 'lucide-react';
+import axios from "axios";
+import { login } from "@/services/api";
 
 const Loginpage = () => {
     const router = useRouter();
     const [email,setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log({email, password});
+        // Submit Login User logic
+        const response = await login(email,password);
+        console.log(response);
     }
 
   return (

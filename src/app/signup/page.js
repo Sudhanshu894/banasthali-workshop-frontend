@@ -5,15 +5,16 @@ import { useRouter } from "next/navigation";
 import { User, Mail, Lock, UserPlus } from 'lucide-react';
 import "../../app/auth.css"
 import Link from "next/link";
+import axios from "axios";
+import { signup } from "@/services/api";
 
 const SignupPage = () => {
-  const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-     name, email, password, confirmPassword
-    });
+    
+    const response = await signup(name, email,password);
+    console.log(response);
   }
 
   const [email, setEmail] = useState("");
