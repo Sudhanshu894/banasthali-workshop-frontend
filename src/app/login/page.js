@@ -1,13 +1,12 @@
 "use client";
 
 import {useRouter} from "next/navigation";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import "../../app/auth.css";
 import Link from "next/link";
 import { Mail, Lock, LogIn } from 'lucide-react';
-import axios from "axios";
-import { login } from "@/services/api";
 import { useAuth } from "@/context/authContext";
+import { backendService } from "@/services/api";
 
 const Loginpage = () => {
     const router = useRouter();
@@ -16,13 +15,14 @@ const Loginpage = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+
     const handleSubmit = async (e) => {
        try{
             e.preventDefault();
             setLoading(true);
             setError('');
         // Submit Login User logic
-            const response = await login(email,password);
+            const response = await backendService.login(email,password);
             console.log("login response", response);
             loginauth(response);
             setLoading(false);

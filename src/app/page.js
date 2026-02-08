@@ -1,28 +1,26 @@
-"use client";
-import Image from "next/image";
-import styles from "./page.module.css";
-import { useAuth } from "@/context/authContext";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/authContext';
 
 export default function Home() {
-
-  const {user, loading} = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading){
-      if (user){
+    if (!loading) {
+      if (user) {
         router.push('/dashboard');
-      }else {
+      } else {
         router.push('/login');
       }
     }
-  },[user, loading, router]);
+  }, [user, loading, router]);
 
   return (
-    <div>
-
+    <div >
+      <div></div>
     </div>
   );
 }
