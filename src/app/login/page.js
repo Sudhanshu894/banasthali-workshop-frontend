@@ -7,16 +7,29 @@ import Link from "next/link";
 import { Mail, Lock, LogIn } from 'lucide-react';
 import axios from "axios";
 import { login } from "@/services/api";
+import { useAuth } from "@/context/authContext";
 
 const Loginpage = () => {
     const router = useRouter();
+    const {loginauth} = useAuth();
     const [email,setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const handleSubmit = async (e) => {
-        e.preventDefault();
+       try{
+            e.preventDefault();
+            setLoading(true);
+            setError('');
         // Submit Login User logic
-        const response = await login(email,password);
-        console.log(response);
+            const response = await login(email,password);
+            console.log("login response", response);
+            loginauth(response);
+            setLoading(false);
+       }catch(err){
+            setError(err?.message);
+            setLoading(false);
+       }
     }
 
   return (
@@ -28,6 +41,10 @@ const Loginpage = () => {
                 <h1>Welcome Back</h1>
                 <p>Sign in to manage your projects</p>
             </div>
+
+            {error && <div className="error-msg">
+             {error}
+            </div>}
 
             <form onSubmit={handleSubmit}>
                 <div className="input-group">
@@ -62,10 +79,14 @@ const Loginpage = () => {
 
                 <button
                     type="submit"
+                    disabled={loading}
                     className="btn btn-primary w-full"
                     style={{ marginTop: '1.5rem' }}
                 >
-                    Sign In
+                    {loading ? 
+                        <div className="spinner"></div> :
+                        "Sign In"
+                    }
                 </button>
             </form>
 

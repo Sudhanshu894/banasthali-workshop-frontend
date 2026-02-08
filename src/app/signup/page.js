@@ -7,14 +7,15 @@ import "../../app/auth.css"
 import Link from "next/link";
 import axios from "axios";
 import { signup } from "@/services/api";
+import { useAuth } from "@/context/authContext";
 
 const SignupPage = () => {
-
+    const {loginauth} = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     const response = await signup(name, email,password);
-    console.log(response);
+    loginauth(response);
   }
 
   const [email, setEmail] = useState("");
