@@ -6,7 +6,7 @@ import { User, Mail, Lock, UserPlus } from 'lucide-react';
 import "../../app/auth.css"
 import Link from "next/link";
 import axios from "axios";
-import { signup } from "@/services/api";
+import { backendService } from "@/services/api";
 import { useAuth } from "@/context/authContext";
 
 const SignupPage = () => {
@@ -14,7 +14,7 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const response = await signup(name, email,password);
+    const response = await backendService.signup(name, email,password);
     loginauth(response);
   }
 
